@@ -5,21 +5,33 @@ import {
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { Logger } from 'nestjs-pino';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
+    { bufferLogs: true },
   );
+  const logger = app.get(Logger);
+  app.useLogger(logger);
 
+  const SWAGGER_PATH = 'docs';
   const config = new DocumentBuilder()
     .setTitle('API document')
     .setDescription('API description')
     .setVersion('1.0')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, documentFactory);
+  SwaggerModule.setup(SWAGGER_PATH, app, documentFactory);
 
-  await app.listen(3000);
+  await app.listen(3000, (err, address) => {
+    if (err) {
+      logger.error(err);
+      process.exit(1);
+    }
+    logger.log(`Server listening at ${address}`);
+    logger.log(`Documentation at ${address}/${SWAGGER_PATH}`);
+  });
 }
 bootstrap();
