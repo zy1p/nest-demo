@@ -6,12 +6,15 @@ import {
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger } from 'nestjs-pino';
+import { randomUUID } from 'crypto';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter(),
-    { bufferLogs: true },
+    new FastifyAdapter({ genReqId: () => randomUUID() }),
+    {
+      bufferLogs: true,
+    },
   );
 
   const logger = app.get(Logger);
