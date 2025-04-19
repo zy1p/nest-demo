@@ -13,6 +13,7 @@ async function bootstrap() {
     new FastifyAdapter(),
     { bufferLogs: true },
   );
+
   const logger = app.get(Logger);
   app.useLogger(logger);
 
@@ -24,6 +25,8 @@ async function bootstrap() {
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(SWAGGER_PATH, app, documentFactory);
+
+  app.enableShutdownHooks();
 
   await app.listen(3000, (err, address) => {
     if (err) {

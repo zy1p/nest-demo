@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerModule } from 'nestjs-pino';
+import { HealthController } from './health/health.controller';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -15,6 +17,7 @@ import { LoggerModule } from 'nestjs-pino';
             : undefined,
       },
     }),
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
