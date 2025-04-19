@@ -31,7 +31,7 @@ async function bootstrap() {
 
   app.enableShutdownHooks();
 
-  await app.listen(3000, (err, address) => {
+  await app.listen(3000, '0.0.0.0', (err, address) => {
     if (err) {
       logger.error(err);
       process.exit(1);
