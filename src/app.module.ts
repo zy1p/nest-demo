@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
@@ -27,6 +28,9 @@ import { HealthModule } from './health/health.module';
           limit: 10,
         },
       ],
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true,
     }),
     HealthModule,
   ],

@@ -1,6 +1,7 @@
 import { randomUUID } from 'crypto';
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -28,6 +29,9 @@ async function bootstrap() {
   const logger = app.get(Logger);
   app.useLogger(logger);
 
+  const configService = app.get(ConfigService);
+  const port = configService.get('PORT');
+
   const SWAGGER_PATH = 'docs';
   const config = new DocumentBuilder()
     .setTitle('API document')
@@ -37,7 +41,7 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(SWAGGER_PATH, app, documentFactory);
 
-  await app.listen(3000, '0.0.0.0', (err, address) => {
+  await app.listen(port || 3000, '0.0.0.0', (err, address) => {
     if (err) {
       logger.error(err);
       process.exit(1);
