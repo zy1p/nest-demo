@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@compodoc/compodoc": "^1.1.26",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
     "@nestjs/cli": "^11.0.6",
     "@nestjs/schematics": "^11.0.5",
     "@nestjs/testing": "^11.0.20",
@@ -49,6 +50,7 @@
     "eslint": "^9.25.0",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-prettier": "^5.2.6",
+    "globals": "^16.0.0",
     "husky": "^9.1.7",
     "jest": "^29.7.0",
     "lint-staged": "^15.5.1",
