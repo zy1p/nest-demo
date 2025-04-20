@@ -1,28 +1,36 @@
-import { DynamicModule, Module, Provider } from '@nestjs/common';
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { Pool } from 'pg';
+import { Env } from 'src/env.validation';
 
-import { QUERY_CLIENT } from '.';
-import { DbService } from './db.service';
+import { Module, Provider } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+
+import * as schema from './schema';
+
+export const QUERY_CLIENT = 'QUERY_CLIENT';
+
+export type QueryClient = ReturnType<typeof drizzle<typeof schema>>;
+
+const providers: Provider[] = [
+  {
+    provide: QUERY_CLIENT,
+    inject: [ConfigService],
+    useFactory: (configService: ConfigService<Env, true>) => {
+      const pool = new Pool({
+        connectionString: configService.get('POSTGRES_DATABASE_URL', {
+          infer: true,
+        }),
+      });
+
+      const db = drizzle({ client: pool, schema });
+
+      return db;
+    },
+  },
+];
 
 @Module({
-  providers: [DbService],
-  exports: [DbService],
+  providers,
+  exports: providers,
 })
-export class DbModule {
-  static forRoot(): DynamicModule {
-    const providers: Provider[] = [
-      {
-        provide: QUERY_CLIENT,
-        useFactory: () => {
-          // TODO: implement the query client
-        },
-      },
-    ];
-
-    return {
-      module: DbModule,
-      global: true,
-      providers,
-      exports: providers,
-    };
-  }
-}
+export class DbModule {}
