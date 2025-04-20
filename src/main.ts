@@ -5,6 +5,9 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
+import fastifyCsrf from '@fastify/csrf-protection';
+import helmet from '@fastify/helmet';
 import { Logger } from 'nestjs-pino';
 
 import { AppModule } from './app.module';
@@ -18,6 +21,11 @@ async function bootstrap() {
     },
   );
 
+  app.enableCors();
+  app.enableShutdownHooks();
+  await app.register(helmet);
+  await app.register(fastifyCsrf);
+
   const logger = app.get(Logger);
   app.useLogger(logger);
 
@@ -29,8 +37,6 @@ async function bootstrap() {
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(SWAGGER_PATH, app, documentFactory);
-
-  app.enableShutdownHooks();
 
   await app.listen(3000, '0.0.0.0', (err, address) => {
     if (err) {

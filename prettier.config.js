@@ -9,6 +9,7 @@ const config = {
   importOrder: [
     '<TYPES>',
     '^@nestjs/(.*)$',
+    '',
     '<THIRD_PARTY_MODULES>',
     '',
     '^[.]',
