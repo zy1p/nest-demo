@@ -20,6 +20,8 @@
     "paths": {
       "@lib/auth": ["libs/auth/src"],
       "@lib/auth/*": ["libs/auth/src/*"],
+      "@lib/db": ["libs/db/src"],
+      "@lib/db/*": ["libs/db/src/*"],
       "@lib/user": ["libs/user/src"],
       "@lib/user/*": ["libs/user/src/*"]
     }
