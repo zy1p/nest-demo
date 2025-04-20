@@ -45,6 +45,10 @@ export default defineConfig([
     },
 
     rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
       '@typescript-eslint/consistent-type-imports': [
         'warn',
         {
