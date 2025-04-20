@@ -7,6 +7,7 @@ import { LoggerModule } from 'nestjs-pino';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { validate } from './env.validation';
 import { HealthModule } from './health/health.module';
 
 @Module({
@@ -31,6 +32,7 @@ import { HealthModule } from './health/health.module';
     }),
     ConfigModule.forRoot({
       isGlobal: true,
+      validate,
     }),
     HealthModule,
   ],

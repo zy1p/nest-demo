@@ -11,6 +11,7 @@ import helmet from '@fastify/helmet';
 import { Logger } from 'nestjs-pino';
 
 import { AppModule } from './app.module';
+import { type Env } from './env.validation';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -29,8 +30,8 @@ async function bootstrap() {
   const logger = app.get(Logger);
   app.useLogger(logger);
 
-  const configService = app.get(ConfigService);
-  const port = configService.get('PORT');
+  const configService = app.get(ConfigService<Env, true>);
+  const port = configService.get('PORT', { infer: true });
 
   const SWAGGER_PATH = 'docs';
   const config = new DocumentBuilder()
