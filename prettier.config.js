@@ -8,6 +8,7 @@ const config = {
   plugins: ['@ianvs/prettier-plugin-sort-imports'],
   importOrder: [
     '<TYPES>',
+    '',
     '^@nestjs/(.*)$',
     '',
     '<THIRD_PARTY_MODULES>',
