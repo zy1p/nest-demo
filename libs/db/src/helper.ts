@@ -8,8 +8,8 @@ import {
 } from 'drizzle-orm/pg-core';
 
 export const timestamps = {
-  createAt: timestamp('create_at').notNull().defaultNow(),
-  updateAt: timestamp('update_at').$onUpdate(() => sql`now()`),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').$onUpdate(() => sql`now()`),
 };
 
 export const commonColumns = {

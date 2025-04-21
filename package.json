@@ -41,6 +41,7 @@
     "@nestjs/throttler": "^6.4.0",
     "@t3-oss/env-core": "^0.12.0",
     "drizzle-orm": "^0.42.0",
+    "drizzle-zod": "^0.7.1",
     "nestjs-pino": "^4.4.0",
     "pg": "^8.14.1",
     "pg-native": "^3.3.0",
