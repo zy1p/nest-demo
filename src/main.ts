@@ -4,6 +4,7 @@ import fastifyCsrf from '@fastify/csrf-protection';
 import helmet from '@fastify/helmet';
 import { Logger } from 'nestjs-pino';
 
+import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
@@ -23,6 +24,7 @@ async function bootstrap() {
 
   app.enableCors();
   app.enableShutdownHooks();
+  app.useGlobalPipes(new ValidationPipe());
   await app.register(helmet);
   await app.register(fastifyCsrf);
 
