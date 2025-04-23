@@ -43,6 +43,9 @@ importers:
       '@nestjs/throttler':
         specifier: ^6.4.0
         version: 6.4.0(@nestjs/common@11.0.20(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.20(@nestjs/common@11.0.20(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)
+      '@phc/format':
+        specifier: ^1.0.0
+        version: 1.0.0
       '@t3-oss/env-core':
         specifier: ^0.12.0
         version: 0.12.0(typescript@5.8.3)(zod@3.24.3)
@@ -104,6 +107,9 @@ importers:
       '@types/pg':
         specifier: ^8.11.13
         version: 8.11.13
+      '@types/phc__format':
+        specifier: ^1.0.1
+        version: 1.0.1
       '@types/supertest':
         specifier: ^6.0.3
         version: 6.0.3
@@ -2477,6 +2483,13 @@ packages:
         integrity: sha512-ZOBkgDwEdoYVlSeRbYYXs0S9MejQofiVYoTbKzy/6GQa39/q5tQU2IX46+shYnUkpEl3wc+J6wRlar7r2EK2xA==,
       }
 
+  '@phc/format@1.0.0':
+    resolution:
+      {
+        integrity: sha512-m7X9U6BG2+J+R1lSOdCiITLLrxm+cWlNI3HUFA92oLO77ObGNzaKdh8pMLqdZcshtkKuV84olNNXDfMc4FezBQ==,
+      }
+    engines: { node: '>=10' }
+
   '@pkgr/core@0.2.4':
     resolution:
       {
@@ -2731,6 +2744,12 @@ packages:
     resolution:
       {
         integrity: sha512-6kXByGkvRvwXLuyaWzsebs2du6+XuAB2CuMsuzP7uaihQahshVgSmB22Pmh0vQMkQ1h5+PZU0d+Di1o+WpVWJg==,
+      }
+
+  '@types/phc__format@1.0.1':
+    resolution:
+      {
+        integrity: sha512-hoAQFKcP3voXk/ZEl3jrvS63o/HYLszq4nA2mqjytaSEHEy3j3t0gSFtPLnfKtX34k/xfath7etOoGw5ukoqXQ==,
       }
 
   '@types/qs@6.9.18':
@@ -9826,6 +9845,8 @@ snapshots:
     dependencies:
       '@noble/hashes': 1.7.2
 
+  '@phc/format@1.0.0': {}
+
   '@pkgr/core@0.2.4': {}
 
   '@scarf/scarf@1.4.0': {}
@@ -9974,6 +9995,10 @@ snapshots:
       '@types/node': 22.14.1
       pg-protocol: 1.8.0
       pg-types: 4.0.2
+
+  '@types/phc__format@1.0.1':
+    dependencies:
+      '@types/node': 22.14.1
 
   '@types/qs@6.9.18': {}
 

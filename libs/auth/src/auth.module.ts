@@ -7,9 +7,10 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { PasswordService } from './password/password.service';
 
 @Module({
-  providers: [AuthService],
+  providers: [AuthService, PasswordService],
   exports: [AuthService],
   imports: [
     UserModule,
