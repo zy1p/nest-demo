@@ -35,6 +35,7 @@ async function bootstrap() {
 
   const SWAGGER_PATH = 'docs';
   const config = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('API document')
     .setDescription('API description')
     .setVersion('1.0')

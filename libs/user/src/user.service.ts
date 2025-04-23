@@ -16,16 +16,31 @@ export class UserService {
     @Inject(QUERY_CLIENT) private readonly queryClient: QueryClient,
   ) {}
 
-  static userCreateSchema = createInsertSchema(usersTable);
+  static userCreateSchema = createInsertSchema(usersTable, {
+    email: z.string().email(),
+    username: z.string().min(3).max(20),
+    password: z.string().min(8).max(100),
+  })
+    .required({
+      username: true,
+      password: true,
+      email: true,
+    })
+    .pick({
+      username: true,
+      password: true,
+      email: true,
+      firstName: true,
+      lastName: true,
+    });
+
   static userSelectSchema = createSelectSchema(usersTable);
   static userUpdateSchema = createUpdateSchema(usersTable);
 
   async createUser(input: z.infer<typeof UserService.userCreateSchema>) {
-    const values = UserService.userCreateSchema.parse(input);
-
     const user = await this.queryClient
       .insert(usersTable)
-      .values(values)
+      .values(input)
       .returning();
 
     return user;
