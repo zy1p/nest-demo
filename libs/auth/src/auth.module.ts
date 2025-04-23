@@ -18,7 +18,7 @@ import { PasswordService } from './password/password.service';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService<Env, true>) => ({
         secret: configService.get('JWT_SECRET', { infer: true }),
-        signOptions: { expiresIn: '60s' },
+        signOptions: { expiresIn: '1d' },
       }),
     }),
   ],

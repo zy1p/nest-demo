@@ -1,10 +1,11 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dtos/sigin-in.dto';
 import { SignUpDto } from './dtos/sigin-up.dto';
+import { User } from './user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -22,8 +23,8 @@ export class AuthController {
 
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  @Post('protected')
-  protected() {
-    return 'This is a protected route';
+  @Get('current-user')
+  currentUser(@User() user) {
+    return user;
   }
 }

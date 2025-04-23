@@ -1,7 +1,8 @@
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { randomUUID } from 'crypto';
+import fastifyCookie from '@fastify/cookie';
 import fastifyCsrf from '@fastify/csrf-protection';
-import helmet from '@fastify/helmet';
+import fastifyHelmet from '@fastify/helmet';
 import { Logger } from 'nestjs-pino';
 import { patchNestJsSwagger } from 'nestjs-zod';
 
@@ -24,7 +25,8 @@ async function bootstrap() {
 
   app.enableCors();
   app.enableShutdownHooks();
-  await app.register(helmet);
+  await app.register(fastifyHelmet);
+  await app.register(fastifyCookie);
   await app.register(fastifyCsrf);
 
   const logger = app.get(Logger);
