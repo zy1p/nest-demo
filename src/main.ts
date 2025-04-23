@@ -25,6 +25,7 @@ async function bootstrap() {
 
   app.enableCors();
   app.enableShutdownHooks();
+
   await app.register(fastifyHelmet);
   await app.register(fastifyCookie);
   await app.register(fastifyCsrf);
@@ -43,7 +44,9 @@ async function bootstrap() {
     .setVersion('1.0')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup(SWAGGER_PATH, app, documentFactory);
+  SwaggerModule.setup(SWAGGER_PATH, app, documentFactory, {
+    swaggerOptions: { persistAuthorization: true, docExpansion: 'none' },
+  });
   patchNestJsSwagger();
 
   await app.listen(port, '0.0.0.0', (err, address) => {
