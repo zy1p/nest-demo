@@ -1,7 +1,6 @@
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { randomUUID } from 'crypto';
 import fastifyCookie from '@fastify/cookie';
-import fastifyCsrf from '@fastify/csrf-protection';
 import fastifyHelmet from '@fastify/helmet';
 import { Logger } from 'nestjs-pino';
 import { patchNestJsSwagger } from 'nestjs-zod';
@@ -28,7 +27,6 @@ async function bootstrap() {
 
   await app.register(fastifyHelmet);
   await app.register(fastifyCookie);
-  await app.register(fastifyCsrf);
 
   const logger = app.get(Logger);
   app.useLogger(logger);

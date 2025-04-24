@@ -1,6 +1,4 @@
-import type { FastifyReply } from 'fastify';
-
-import { Controller, Get, Post, Res } from '@nestjs/common';
+import { Controller, Get, Post } from '@nestjs/common';
 
 import { AppService } from './app.service';
 
@@ -14,10 +12,8 @@ export class AppController {
   }
 
   @Get('csrf')
-  getCsrfToken(@Res({ passthrough: true }) res: FastifyReply) {
-    // @ts-expect-error types are not compatible
-    const token = res.generateCsrf();
-    return { token };
+  getCsrfToken() {
+    // TODO: integrate double csrf
   }
 
   // TODO: create a guard for csrf protection
