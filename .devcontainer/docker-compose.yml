@@ -9,7 +9,7 @@ services:
     command: sleep infinity
 
   postgres:
-    image: postgres:latest
+    image: postgres:17.4
     restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
