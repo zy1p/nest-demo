@@ -15,6 +15,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: read
     strategy:
       matrix:
         node-version: [20]
@@ -37,5 +40,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+        id: build
       - name: Build
         run: pnpm run build
+
+      - uses: LouisBrunner/checks-action@v2.0.0
+        if: always()
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Test Build
+          conclusion: ${{ job.status }}
+          output: |
+            {"summary":"${{ steps.build.outputs.summary }}"}
