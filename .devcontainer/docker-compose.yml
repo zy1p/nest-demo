@@ -5,7 +5,6 @@ services:
       dockerfile: .devcontainer/Dockerfile
     volumes:
       - ../..:/workspaces:cached
-    network_mode: service:postgres
     command: sleep infinity
 
   postgres:
