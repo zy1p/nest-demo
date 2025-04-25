@@ -1,10 +1,10 @@
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { randomUUID } from 'crypto';
-import fastifyCsrf from '@fastify/csrf-protection';
-import helmet from '@fastify/helmet';
+import fastifyCookie from '@fastify/cookie';
+import fastifyHelmet from '@fastify/helmet';
 import { Logger } from 'nestjs-pino';
+import { patchNestJsSwagger } from 'nestjs-zod';
 
-import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
@@ -24,9 +24,9 @@ async function bootstrap() {
 
   app.enableCors();
   app.enableShutdownHooks();
-  app.useGlobalPipes(new ValidationPipe());
-  await app.register(helmet);
-  await app.register(fastifyCsrf);
+
+  await app.register(fastifyHelmet);
+  await app.register(fastifyCookie);
 
   const logger = app.get(Logger);
   app.useLogger(logger);
@@ -36,12 +36,16 @@ async function bootstrap() {
 
   const SWAGGER_PATH = 'docs';
   const config = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('API document')
     .setDescription('API description')
     .setVersion('1.0')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup(SWAGGER_PATH, app, documentFactory);
+  SwaggerModule.setup(SWAGGER_PATH, app, documentFactory, {
+    swaggerOptions: { persistAuthorization: true, docExpansion: 'none' },
+  });
+  patchNestJsSwagger();
 
   await app.listen(port, '0.0.0.0', (err, address) => {
     if (err) {

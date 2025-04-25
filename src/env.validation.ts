@@ -8,7 +8,8 @@ export function validate(_config) {
       NODE_ENV: z
         .enum(['development', 'production', 'test'])
         .default('development'),
-      POSTGRES_DATABASE_URL: z.string().url().optional(),
+      POSTGRES_DATABASE_URL: z.string().url(),
+      JWT_SECRET: z.string().min(1),
     },
     runtimeEnv: _config,
     emptyStringAsUndefined: true,

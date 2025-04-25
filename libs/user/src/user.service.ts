@@ -16,16 +16,31 @@ export class UserService {
     @Inject(QUERY_CLIENT) private readonly queryClient: QueryClient,
   ) {}
 
-  userCreateSchema = createInsertSchema(usersTable);
-  userSelectSchema = createSelectSchema(usersTable);
-  userUpdateSchema = createUpdateSchema(usersTable);
+  static userCreateSchema = createInsertSchema(usersTable, {
+    email: z.string().email(),
+    username: z.string().min(3).max(20),
+    password: z.string().min(8).max(100),
+  })
+    .required({
+      username: true,
+      password: true,
+      email: true,
+    })
+    .pick({
+      username: true,
+      password: true,
+      email: true,
+      firstName: true,
+      lastName: true,
+    });
 
-  async createUser(input: z.infer<typeof this.userCreateSchema>) {
-    const values = this.userCreateSchema.parse(input);
+  static userSelectSchema = createSelectSchema(usersTable);
+  static userUpdateSchema = createUpdateSchema(usersTable);
 
+  async createUser(input: z.infer<typeof UserService.userCreateSchema>) {
     const user = await this.queryClient
       .insert(usersTable)
-      .values(values)
+      .values(input)
       .returning();
 
     return user;
@@ -54,8 +69,27 @@ export class UserService {
     return user;
   }
 
-  async updateUser(id: number, input: z.infer<typeof this.userUpdateSchema>) {
-    const values = this.userUpdateSchema.parse(input);
+  async getUserByEmail(email: string) {
+    const user = await this.queryClient.query.usersTable.findFirst({
+      where: (t, op) => op.eq(t.email, email),
+    });
+
+    return user;
+  }
+
+  async getUserByUsername(username: string) {
+    const user = await this.queryClient.query.usersTable.findFirst({
+      where: (t, op) => op.eq(t.username, username),
+    });
+
+    return user;
+  }
+
+  async updateUser(
+    id: number,
+    input: z.infer<typeof UserService.userUpdateSchema>,
+  ) {
+    const values = UserService.userUpdateSchema.parse(input);
 
     const user = await this.queryClient
       .update(usersTable)
