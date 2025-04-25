@@ -1,6 +1,8 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { ApiHeader } from '@nestjs/swagger';
 
 import { AppService } from './app.service';
+import { CsrfGuard, generateToken } from './csrf';
 
 @Controller()
 export class AppController {
@@ -12,13 +14,15 @@ export class AppController {
   }
 
   @Get('csrf')
-  getCsrfToken() {
-    // TODO: integrate double csrf
+  getCsrfToken(@Req() req, @Res({ passthrough: true }) res) {
+    const token = generateToken(req, res, true);
+    return { token };
   }
 
-  // TODO: create a guard for csrf protection
+  @ApiHeader({ name: 'x-csrf-token', required: true })
+  @UseGuards(CsrfGuard)
   @Post('csrf-protected')
   csrfProtected() {
-    return true;
+    return { message: 'CSRF protected route' };
   }
 }
