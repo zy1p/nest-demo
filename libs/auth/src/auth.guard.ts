@@ -1,12 +1,8 @@
-import { Env } from 'src/env.validation';
+import type { Env } from '@lib/env';
+import type { CanActivate, ExecutionContext } from '@nestjs/common';
+import { ENV } from '@lib/env';
 
-import {
-  CanActivate,
-  ExecutionContext,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 
@@ -17,7 +13,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService<Env, true>,
+    @Inject(ENV) private readonly env: Env,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -35,11 +31,8 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      const secret = this.configService.get('JWT_SECRET', {
-        infer: true,
-      });
       const payload = await this.jwtService.verifyAsync(token, {
-        secret: secret,
+        secret: this.env.JWT_SECRET,
       });
       // 💡 We're assigning the payload to the request object here
       // so that we can access it in our route handlers

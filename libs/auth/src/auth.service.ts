@@ -1,19 +1,19 @@
 import { UserService } from '@lib/user';
-import { z } from 'zod';
+import { type z } from 'zod';
 
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
-import { signInSchema } from './dtos/sigin-in.dto';
-import { signUpSchema } from './dtos/sigin-up.dto';
+import { type signInSchema } from './dtos/sign-in.dto';
+import { type signUpSchema } from './dtos/sign-up.dto';
 import { PasswordService } from './password/password.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly passwordService: PasswordService,
+    private readonly userService: UserService,
   ) {}
   async signUp({ password, ...input }: z.infer<typeof signUpSchema>) {
     const hashedPassword = await this.passwordService.scrypt(password);

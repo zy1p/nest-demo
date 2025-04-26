@@ -2,13 +2,13 @@ import type { Provider } from '@nestjs/common';
 import { createEnv } from '@t3-oss/env-core';
 import { z } from 'zod';
 
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 
 export const ENV = 'ENV';
 
 const env = createEnv({
   server: {
-    PORT: z.coerce.number().min(0).max(65536).default(3000),
+    PORT: z.coerce.number().min(0).max(65535).default(3000),
     NODE_ENV: z
       .enum(['development', 'production', 'test'])
       .default('development'),
@@ -27,6 +27,8 @@ const providers: Provider[] = [
     useValue: env,
   },
 ];
+
+@Global()
 @Module({
   providers,
   exports: providers,
