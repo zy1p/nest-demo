@@ -11,6 +11,8 @@
     "@lib/auth/(.*)": "<rootDir>/../libs/auth/src/$1",
     "@lib/db": "<rootDir>/../libs/db/src",
     "@lib/db/(.*)": "<rootDir>/../libs/db/src/$1",
+    "@lib/env": "<rootDir>/../libs/env/src",
+    "@lib/env/(.*)": "<rootDir>/../libs/env/src/$1",
     "@lib/user": "<rootDir>/../libs/user/src",
     "@lib/user/(.*)": "<rootDir>/../libs/user/src/$1"
   }
