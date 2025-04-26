@@ -38,8 +38,8 @@ export default defineConfig([
       sourceType: 'module',
 
       parserOptions: {
-        project: '**/tsconfig.json',
-        tsconfigRootDir: '/Users/z1p/Developer/nest-demo',
+        project: ['./tsconfig.json', './libs/**/tsconfig.json'],
+        tsconfigRootDir: __dirname,
         emitDecoratorMetadata: true,
         experimentalDecorators: true,
       },
