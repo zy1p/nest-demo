@@ -1,16 +1,16 @@
+import type { Env } from '@lib/env';
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { randomUUID } from 'crypto';
 import fastifyCookie from '@fastify/cookie';
 import fastifyHelmet from '@fastify/helmet';
+import { ENV } from '@lib/env';
 import { Logger } from 'nestjs-pino';
 import { patchNestJsSwagger } from 'nestjs-zod';
 
-import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-import type { Env } from './env.validation';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -28,11 +28,9 @@ async function bootstrap() {
   await app.register(fastifyHelmet);
   await app.register(fastifyCookie);
 
+  const env = app.get<Env>(ENV);
   const logger = app.get(Logger);
   app.useLogger(logger);
-
-  const configService = app.get(ConfigService<Env, true>);
-  const port = configService.get('PORT', { infer: true });
 
   const SWAGGER_PATH = 'docs';
   const config = new DocumentBuilder()
@@ -47,7 +45,7 @@ async function bootstrap() {
   });
   patchNestJsSwagger();
 
-  await app.listen(port, '0.0.0.0', (err, address) => {
+  await app.listen(env.PORT, '0.0.0.0', (err, address) => {
     if (err) {
       logger.error(err);
       process.exit(1);

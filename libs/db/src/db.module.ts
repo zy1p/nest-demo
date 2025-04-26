@@ -1,9 +1,10 @@
+import type { Env } from '@lib/env';
+import type { Provider } from '@nestjs/common';
+import { ENV } from '@lib/env';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { Pool } from 'pg';
-import { Env } from 'src/env.validation';
 
-import { Module, Provider } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Module } from '@nestjs/common';
 
 import * as schema from './schema';
 
@@ -14,12 +15,10 @@ export type QueryClient = ReturnType<typeof drizzle<typeof schema>>;
 const providers: Provider[] = [
   {
     provide: QUERY_CLIENT,
-    inject: [ConfigService],
-    useFactory: (configService: ConfigService<Env, true>) => {
+    inject: [ENV],
+    useFactory: (env: Env) => {
       const pool = new Pool({
-        connectionString: configService.get('POSTGRES_DATABASE_URL', {
-          infer: true,
-        }),
+        connectionString: env.POSTGRES_DATABASE_URL,
       });
 
       const db = drizzle({ client: pool, schema });

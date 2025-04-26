@@ -1,15 +1,14 @@
 import { AuthModule } from '@lib/auth';
+import { EnvModule } from '@lib/env';
 import { LoggerModule } from 'nestjs-pino';
 import { ZodSerializerInterceptor, ZodValidationPipe } from 'nestjs-zod';
 
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { validate } from './env.validation';
 import { HealthModule } from './health';
 
 @Module({
@@ -32,12 +31,9 @@ import { HealthModule } from './health';
         },
       ],
     }),
-    ConfigModule.forRoot({
-      isGlobal: true,
-      validate,
-    }),
     HealthModule,
     AuthModule,
+    EnvModule,
   ],
   controllers: [AppController],
   providers: [

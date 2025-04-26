@@ -1,8 +1,8 @@
+import type { Env } from '@lib/env';
+import { ENV } from '@lib/env';
 import { UserModule } from '@lib/user';
-import { Env } from 'src/env.validation';
 
 import { Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 
 import { AuthController } from './auth.controller';
@@ -15,9 +15,9 @@ import { PasswordService } from './password/password.service';
   imports: [
     UserModule,
     JwtModule.registerAsync({
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService<Env, true>) => ({
-        secret: configService.get('JWT_SECRET', { infer: true }),
+      inject: [ENV],
+      useFactory: async (env: Env) => ({
+        secret: env.JWT_SECRET,
         signOptions: { expiresIn: '1d' },
       }),
     }),
