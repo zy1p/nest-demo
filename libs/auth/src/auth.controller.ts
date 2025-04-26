@@ -3,8 +3,8 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
-import { SignInDto } from './dtos/sigin-in.dto';
-import { SignUpDto } from './dtos/sigin-up.dto';
+import { SignInDto } from './dtos/sign-in.dto';
+import { SignUpDto } from './dtos/sign-up.dto';
 import { User } from './user.decorator';
 
 @Controller('auth')

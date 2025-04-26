@@ -4,8 +4,8 @@ import { type z } from 'zod';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
-import { type signInSchema } from './dtos/sigin-in.dto';
-import { type signUpSchema } from './dtos/sigin-up.dto';
+import { type signInSchema } from './dtos/sign-in.dto';
+import { type signUpSchema } from './dtos/sign-up.dto';
 import { PasswordService } from './password/password.service';
 
 @Injectable()
