@@ -1,12 +1,12 @@
-import { UserService } from '@lib/user';
-import { z } from 'zod';
+import { type UserService } from '@lib/user';
+import { type z } from 'zod';
 
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { type JwtService } from '@nestjs/jwt';
 
-import { signInSchema } from './dtos/sigin-in.dto';
-import { signUpSchema } from './dtos/sigin-up.dto';
-import { PasswordService } from './password/password.service';
+import { type signInSchema } from './dtos/sigin-in.dto';
+import { type signUpSchema } from './dtos/sigin-up.dto';
+import { type PasswordService } from './password/password.service';
 
 @Injectable()
 export class AuthService {

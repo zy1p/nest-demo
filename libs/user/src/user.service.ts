@@ -1,4 +1,5 @@
-import { QUERY_CLIENT, QueryClient } from '@lib/db';
+import type { QueryClient } from '@lib/db';
+import { QUERY_CLIENT } from '@lib/db';
 import { usersTable } from '@lib/db/schema';
 import { eq } from 'drizzle-orm';
 import {

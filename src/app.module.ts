@@ -32,8 +32,8 @@ import { HealthModule } from './health';
       ],
     }),
     HealthModule,
-    AuthModule,
     EnvModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [

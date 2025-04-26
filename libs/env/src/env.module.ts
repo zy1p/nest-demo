@@ -2,7 +2,7 @@ import type { Provider } from '@nestjs/common';
 import { createEnv } from '@t3-oss/env-core';
 import { z } from 'zod';
 
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 
 export const ENV = 'ENV';
 
@@ -27,6 +27,8 @@ const providers: Provider[] = [
     useValue: env,
   },
 ];
+
+@Global()
 @Module({
   providers,
   exports: providers,
