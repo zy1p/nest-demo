@@ -2,9 +2,9 @@ import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 import { AuthGuard } from './auth.guard';
-import { type AuthService } from './auth.service';
-import { type SignInDto } from './dtos/sigin-in.dto';
-import { type SignUpDto } from './dtos/sigin-up.dto';
+import { AuthService } from './auth.service';
+import { SignInDto } from './dtos/sigin-in.dto';
+import { SignUpDto } from './dtos/sigin-up.dto';
 import { User } from './user.decorator';
 
 @Controller('auth')

@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { ApiHeader } from '@nestjs/swagger';
 
-import { type AppService } from './app.service';
+import { AppService } from './app.service';
 import { CsrfGuard, generateToken } from './csrf';
 
 @Controller()

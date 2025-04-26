@@ -10,8 +10,6 @@ import { AuthService } from './auth.service';
 import { PasswordService } from './password/password.service';
 
 @Module({
-  providers: [AuthService, PasswordService],
-  exports: [AuthService],
   imports: [
     UserModule,
     JwtModule.registerAsync({
@@ -22,6 +20,8 @@ import { PasswordService } from './password/password.service';
       }),
     }),
   ],
+  providers: [AuthService, PasswordService],
+  exports: [AuthService],
   controllers: [AuthController],
 })
 export class AuthModule {}

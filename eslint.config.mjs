@@ -40,6 +40,8 @@ export default defineConfig([
       parserOptions: {
         project: '**/tsconfig.json',
         tsconfigRootDir: '/Users/z1p/Developer/nest-demo',
+        emitDecoratorMetadata: true,
+        experimentalDecorators: true,
       },
     },
 

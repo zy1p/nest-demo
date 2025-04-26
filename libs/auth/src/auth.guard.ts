@@ -3,8 +3,8 @@ import type { CanActivate, ExecutionContext } from '@nestjs/common';
 import { ENV } from '@lib/env';
 
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { type Reflector } from '@nestjs/core';
-import { type JwtService } from '@nestjs/jwt';
+import { Reflector } from '@nestjs/core';
+import { JwtService } from '@nestjs/jwt';
 
 import { IS_PUBLIC_KEY } from './public.decorator';
 
