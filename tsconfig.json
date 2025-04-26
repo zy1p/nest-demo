@@ -23,6 +23,8 @@
       "@lib/auth/*": ["libs/auth/src/*"],
       "@lib/db": ["libs/db/src"],
       "@lib/db/*": ["libs/db/src/*"],
+      "@lib/env": ["libs/env/src"],
+      "@lib/env/*": ["libs/env/src/*"],
       "@lib/user": ["libs/user/src"],
       "@lib/user/*": ["libs/user/src/*"]
     }
