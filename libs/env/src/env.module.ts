@@ -8,7 +8,7 @@ export const ENV = 'ENV';
 
 const env = createEnv({
   server: {
-    PORT: z.coerce.number().min(0).max(65536).default(3000),
+    PORT: z.coerce.number().min(0).max(65535).default(3000),
     NODE_ENV: z
       .enum(['development', 'production', 'test'])
       .default('development'),
