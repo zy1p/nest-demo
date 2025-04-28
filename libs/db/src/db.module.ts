@@ -25,7 +25,7 @@ const providers: Provider[] = [
 
       await pool.query('SELECT 1;').catch((err) => {
         logger.error('Failed to connect to the database', err);
-        process.exit(-1);
+        throw new Error('Failed to connect to the database');
       });
 
       const db = drizzle({ client: pool, schema });
@@ -59,7 +59,7 @@ export class DbModule {
 
           await pool.query('SELECT 1;').catch((err) => {
             logger.error('Failed to connect to the database', err);
-            process.exit(-1);
+            throw new Error('Failed to connect to the database');
           });
 
           const db = drizzle({ client: pool, schema: options.schema });
