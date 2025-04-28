@@ -1,6 +1,7 @@
 import type { Env } from '@lib/env';
-import type { Provider } from '@nestjs/common';
+import type { DynamicModule, Provider } from '@nestjs/common';
 import { ENV } from '@lib/env';
+import { DrizzleConfig } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { Logger } from 'nestjs-pino';
 import { Pool } from 'pg';
@@ -34,8 +35,45 @@ const providers: Provider[] = [
   },
 ];
 
+export interface DbModuleOptions {
+  connectionString: string;
+  provide: string;
+  schema: DrizzleConfig['schema'];
+  global?: boolean;
+}
+
 @Module({
   providers,
   exports: providers,
 })
-export class DbModule {}
+export class DbModule {
+  static forRoot(options: DbModuleOptions): DynamicModule {
+    const providers: Provider[] = [
+      {
+        provide: options.provide,
+        inject: [Logger],
+        useFactory: async (logger: Logger) => {
+          const pool = new Pool({
+            connectionString: options.connectionString,
+          });
+
+          await pool.query('SELECT 1;').catch((err) => {
+            logger.error('Failed to connect to the database', err);
+            process.exit(-1);
+          });
+
+          const db = drizzle({ client: pool, schema: options.schema });
+
+          return db;
+        },
+      },
+    ];
+
+    return {
+      module: DbModule,
+      providers,
+      exports: providers,
+      global: options.global,
+    };
+  }
+}
