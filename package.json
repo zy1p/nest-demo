@@ -41,7 +41,7 @@
     "@nestjs/throttler": "^6.4.0",
     "@phc/format": "^1.0.0",
     "@t3-oss/env-core": "^0.13.0",
-    "csrf-csrf": "^3.2.2",
+    "csrf-csrf": "^4.0.0",
     "drizzle-orm": "^0.43.1",
     "drizzle-zod": "^0.7.1",
     "nestjs-pino": "^4.4.0",
